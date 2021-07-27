@@ -41,7 +41,7 @@
                             </td>
                             <td class="px-4 py-4">
                                 <button type="button" wire:click="edit({{ $post->id }})"  data-toggle="modal" data-target="#detailModel" class="btn btn-warning btn-sm">Edit</button>
-                                <button type="button" wire:click="delete({{ $post->id }})"  class="btn btn-danger btn-sm">Delete</button>
+                                <button type="button" wire:click="$emit('deletePost',{{ $post->id }})"  class="btn btn-danger btn-sm">Delete</button>
                             </td>
                         </tr>
                         @endforeach
@@ -52,4 +52,27 @@
         </div>
     </div>
     @include('livewire.create-posts')
+    @push('scripts')
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function(){
+                @this.on('deletePost', post_id => {
+                    Swal.fire({
+                        title: 'Are you sure',
+                        text: 'You are about to remove this post',
+                        showCancelButton: true,
+                        icon: "warning",
+                        confirmButtonColor: "#dc3545",
+                        confirmButtonText: 'Delete!'
+                    }).then((result) => {
+                        if(result.value){
+                            @this.call('delete', post_id);
+                            Swal.fire({title: 'Post deleted successfully', icon:'success'});
+                        }else{
+                            Swal.fire({title: 'Nothing will happen', icon:'success'});
+                        }
+                    });
+                })
+            })
+        </script>
+    @endpush
 </div>
