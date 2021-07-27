@@ -21,6 +21,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('posts', ShowPosts::class);
+Route::get('posts', ShowPosts::class)->name('posts');
 
 
