@@ -13,9 +13,19 @@
             <div class="card">
                 <div class="card-body">
                     <h1>Posts List</h1>
-                    <button type="button" class="float-right btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModel">
+                    <button type="button" class="float-right mb-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModel">
                         Create Post
                     </button>
+
+                    <div class="mb-2 input-group">
+                          <input type="text" wire:model='search' class="form-control" name="search" id="search" aria-describedby="helpId" placeholder="Search">
+                          <div class="input-group-prepend">
+                              <button class="btn btn-info" wire:click="clearSearch()">
+                                Clear!
+                              </button>
+                          </div>
+                    </div>
+
                     <table class="table">
                         <thead>
                             <tr class="text-gray-800 border border-b-0">

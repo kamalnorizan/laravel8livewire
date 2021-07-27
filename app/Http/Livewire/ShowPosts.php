@@ -7,12 +7,15 @@ use App\Models\Post;
 use Auth;
 class ShowPosts extends Component
 {
-    public $posts, $text, $title, $description, $post_id;
+    public $posts, $text, $title, $description, $post_id, $search;
     public $isDialogOpen=0;
     public function render()
     {
-        $this->posts = Post::latest()->get();
-        $this->text = 'Test';
+        if($this->search !=''){
+            $this->posts = Post::where('title','like','%'.$this->search.'%')->get();
+        }else{
+            $this->posts = Post::latest()->get();
+        }
         return view('livewire.show-posts');
     }
 
@@ -72,6 +75,9 @@ class ShowPosts extends Component
         $post->delete();
     }
 
-
+    public function clearSearch()
+    {
+        $this->search='';
+    }
 
 }
