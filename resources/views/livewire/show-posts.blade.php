@@ -64,6 +64,9 @@
                                 </td>
                                 <td class="px-4 py-4">
                                     <button type="button" wire:click="edit({{ $post->id }})"  data-toggle="modal" data-target="#detailModel" class="btn btn-warning btn-sm">Edit</button>
+
+                                    <a class="btn btn-info btn-sm" href='{{ route('post-detail',['id'=>$post->id]) }}'>Show</a>
+
                                     <button type="button" wire:click="$emit('deletePost',{{ $post->id }})"  class="btn btn-danger btn-sm">Delete</button>
                                 </td>
                             </tr>

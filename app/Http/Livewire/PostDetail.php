@@ -39,4 +39,12 @@ class PostDetail extends Component
     {
         # code...
     }
+
+    public function delete($post_id)
+    {
+        $post = Post::find($post_id);
+        $post->delete();
+
+        return redirect('/posts');
+    }
 }
