@@ -16,8 +16,16 @@
                     <button type="button" class="float-right mb-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModel">
                         Create Post
                     </button>
-
-                    <div class="mb-2 input-group">
+                    <div class="form-group col-md-3">
+                      <label for="">Show :</label>
+                      <select class="form-control" wire:model='limit' name="show" id="show">
+                        <option value='5'>5</option>
+                        <option value='10'>10</option>
+                        <option value='20'>20</option>
+                        <option value='50'>50</option>
+                      </select>
+                    </div>
+                    <div class="mb-2 input-group col-md-12">
                           <input type="text" wire:model='search' class="form-control" name="search" id="search" aria-describedby="helpId" placeholder="Search">
                           <div class="input-group-prepend">
                               <button class="btn btn-info" wire:click="clearSearch()">
@@ -25,38 +33,39 @@
                               </button>
                           </div>
                     </div>
-
-                    <table class="table">
-                        <thead>
-                            <tr class="text-gray-800 border border-b-0">
-                                <th class="px-4 py-3">
-                                    Title
-                                </th>
-                                <th class="px-4 py-3">
-                                    Author
-                                </th>
-                                <th class="px-4 py-3">
-                                    Action
-                                </th>
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr class="text-gray-800 border border-b-0">
+                                    <th class="px-4 py-3">
+                                        Title
+                                    </th>
+                                    <th class="px-4 py-3">
+                                        Author
+                                    </th>
+                                    <th class="px-4 py-3">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($posts as $post)
+                            <tr class="w-full font-light text-gray-700 whitespace-no-wrap border border-b-0">
+                                <td class="px-4 py-4">
+                                    {{ $post->title }}
+                                </td>
+                                <td class="px-4 py-4">
+                                    {{ $post->user_id }}
+                                </td>
+                                <td class="px-4 py-4">
+                                    <button type="button" wire:click="edit({{ $post->id }})"  data-toggle="modal" data-target="#detailModel" class="btn btn-warning btn-sm">Edit</button>
+                                    <button type="button" wire:click="$emit('deletePost',{{ $post->id }})"  class="btn btn-danger btn-sm">Delete</button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($posts as $post)
-                        <tr class="w-full font-light text-gray-700 whitespace-no-wrap border border-b-0">
-                            <td class="px-4 py-4">
-                                {{ $post->title }}
-                            </td>
-                            <td class="px-4 py-4">
-                                {{ $post->user_id }}
-                            </td>
-                            <td class="px-4 py-4">
-                                <button type="button" wire:click="edit({{ $post->id }})"  data-toggle="modal" data-target="#detailModel" class="btn btn-warning btn-sm">Edit</button>
-                                <button type="button" wire:click="$emit('deletePost',{{ $post->id }})"  class="btn btn-danger btn-sm">Delete</button>
-                            </td>
-                        </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

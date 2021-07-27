@@ -8,13 +8,14 @@ use Auth;
 class ShowPosts extends Component
 {
     public $posts, $text, $title, $description, $post_id, $search;
+    public $limit=10;
     public $isDialogOpen=0;
     public function render()
     {
         if($this->search !=''){
             $this->posts = Post::where('title','like','%'.$this->search.'%')->get();
         }else{
-            $this->posts = Post::latest()->get();
+            $this->posts = Post::latest()->limit($this->limit)->get();
         }
         return view('livewire.show-posts');
     }
