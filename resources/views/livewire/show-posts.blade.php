@@ -1,7 +1,7 @@
 <div>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            Posts
+            Posts {{ $totalrow }}
         </h2>
     </x-slot>
     @if(session()->has('message'))
@@ -60,7 +60,7 @@
                                     {{ $post->title }}
                                 </td>
                                 <td class="px-4 py-4">
-                                    {{ $post->user_id }}
+                                    {{ $post->user->name }}
                                 </td>
                                 <td class="px-4 py-4">
                                     <button type="button" wire:click="edit({{ $post->id }})"  data-toggle="modal" data-target="#detailModel" class="btn btn-warning btn-sm">Edit</button>
@@ -70,6 +70,13 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <center>
+                            <div class="btn-group" role="group">
+                                @for ($i = 1; $i <= $pages; $i++)
+                                    <button class="btn @if($currpage==$i) btn-warning @else btn-default @endif" wire:click="changePage({{ $i }})" role="button">{{ $i }}</button>
+                                @endfor
+                            </div>
+                        </center>
                     </div>
                 </div>
             </div>

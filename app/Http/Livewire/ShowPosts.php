@@ -7,17 +7,26 @@ use App\Models\Post;
 use Auth;
 class ShowPosts extends Component
 {
-    public $posts, $text, $title, $description, $post_id, $search;
+    public $posts, $text, $title, $description, $post_id, $search, $pages, $totalrow;
     public $limit=10;
+    public $currpage=1;
     public $isDialogOpen=0;
     public function render()
     {
         if($this->search !=''){
-            $this->posts = Post::where('title','like','%'.$this->search.'%')->get();
+            $this->posts = Post::with('user')->where('title','like','%'.$this->search.'%')->get();
         }else{
-            $this->posts = Post::latest()->limit($this->limit)->get();
+            $this->posts = Post::with('user')->latest()->offset($this->currpage)->limit($this->limit)->get();
         }
+
+        $this->totalrow = Post::count();
+        $this->pages = ceil($this->totalrow / $this->limit);
         return view('livewire.show-posts');
+    }
+
+    public function changePage($currentpage)
+    {
+        $this->currpage = $currentpage;
     }
 
     public function create()
