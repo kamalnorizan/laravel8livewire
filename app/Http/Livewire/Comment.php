@@ -23,6 +23,10 @@ class Comment extends Component
 
     public function store()
     {
+        $this->validate([
+            'description' => 'required'
+        ]);
+
         $comment = new CommentModal;
         $comment->description = $this->description;
         $comment->post_id = $this->post_id;
@@ -30,5 +34,15 @@ class Comment extends Component
         $comment->save();
 
         $this->description='';
+    }
+
+    public function deleteComment($id)
+    {
+        $comment = CommentModal::where('user_id',Auth::user()->id)->where('id',$id)->first();
+        if($comment){
+            $comment->delete();
+        }else{
+            session()->flash('message', 'You are not allowed to do this action');
+        }
     }
 }
