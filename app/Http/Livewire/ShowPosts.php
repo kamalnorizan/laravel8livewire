@@ -7,13 +7,26 @@ use App\Models\Post;
 use Auth;
 class ShowPosts extends Component
 {
-    public $posts, $text, $title, $description, $post_id;
+    public $posts, $text, $title, $description, $post_id, $search, $pages, $totalrow;
+    public $limit=10;
+    public $currpage=1;
     public $isDialogOpen=0;
     public function render()
     {
-        $this->posts = Post::latest()->get();
-        $this->text = 'Test';
+        if($this->search !=''){
+            $this->posts = Post::with('user')->where('title','like','%'.$this->search.'%')->get();
+        }else{
+            $this->posts = Post::with('user')->latest()->offset($this->currpage)->limit($this->limit)->get();
+        }
+
+        $this->totalrow = Post::count();
+        $this->pages = ceil($this->totalrow / $this->limit);
         return view('livewire.show-posts');
+    }
+
+    public function changePage($currentpage)
+    {
+        $this->currpage = $currentpage;
     }
 
     public function create()
@@ -33,9 +46,9 @@ class ShowPosts extends Component
 
     public function clearForm()
     {
-        $this->title = 'Dikosongkan';
+        $this->title = '';
         $this->description = '';
-        // $this->closeModalPopover();
+        $this->post_id = '';
     }
 
     public function store()
@@ -52,10 +65,29 @@ class ShowPosts extends Component
             'user_id'=> Auth::user()->id,
         ]);
 
+        $this->clearForm();
+
         session()->flash('message',$this->post_id ? 'Post Updated':'Post created');
 
     }
 
+    public function edit($id)
+    {
+        $post = Post::find($id);
+        $this->title = $post->title;
+        $this->description = $post->description;
+        $this->post_id = $post->id;
+    }
 
+    public function delete($id)
+    {
+        $post = Post::find($id);
+        $post->delete();
+    }
+
+    public function clearSearch()
+    {
+        $this->search='';
+    }
 
 }
