@@ -18,6 +18,9 @@
                     <x-jet-nav-link href="{{ route('posts') }}" :active="request()->routeIs('posts')">
                         Posts
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('postsdatatable') }}" :active="request()->routeIs('postsdatatable')">
+                        Posts Datatable
+                    </x-jet-nav-link>
                 </div>
             </div>
 

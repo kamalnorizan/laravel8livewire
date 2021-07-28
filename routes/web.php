@@ -30,6 +30,12 @@ Route::get('home',function(){
     return view('home');
 });
 
+Route::get('posts-datatable',function(){
+    return view('postsdatatable');
+})->name('postsdatatable');
+
+
+
 
 
 
