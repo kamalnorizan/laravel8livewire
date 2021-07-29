@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ShowPosts;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,3 +37,5 @@ Route::get('posts-datatable',function(){
 })->name('postsdatatable');
 
 Route::post('store',[PostController::class, 'store'])->name('posts.store');
+
+Route::post('comment',[CommentController::class, 'store'])->name('comment.store');
