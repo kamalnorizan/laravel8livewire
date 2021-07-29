@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ShowPosts;
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,8 +35,4 @@ Route::get('posts-datatable',function(){
     return view('postsdatatable');
 })->name('postsdatatable');
 
-
-
-
-
-
+Route::post('store',[PostController::class, 'store'])->name('posts.store');

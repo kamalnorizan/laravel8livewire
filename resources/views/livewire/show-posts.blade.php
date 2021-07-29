@@ -52,7 +52,7 @@
                           </div>
                     </div>
                     <div class="col-md-12">
-                        <table class="table">
+                        <table class="table" id='postsTbl'>
                             <thead>
                                 <tr class="text-gray-800 border border-b-0">
                                     <th class="px-4 py-3">
