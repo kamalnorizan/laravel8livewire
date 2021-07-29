@@ -39,3 +39,4 @@ Route::get('posts-datatable',function(){
 Route::post('store',[PostController::class, 'store'])->name('posts.store');
 
 Route::post('comment',[CommentController::class, 'store'])->name('comment.store');
+Route::post('comment/delete',[CommentController::class, 'destroy'])->name('comment.delete');
