@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ShowPosts;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +15,10 @@ use App\Http\Controllers\CommentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+DB::listen(function ($event) {
+    dump($event->sql);
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,9 +33,7 @@ Route::get('post/{id}',function($id){
     return view('post',compact('id'));
 })->name('post-detail');
 
-Route::get('home',function(){
-    return view('home');
-});
+Route::get('home',[HomeController::class,'index'])->name('home');
 
 Route::get('posts-datatable',function(){
     return view('postsdatatable');

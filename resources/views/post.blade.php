@@ -91,14 +91,4 @@
         </script>
     @endpush
 </x-app-layout>
-<div class="mt-2 card">
-    <div class="card-body">
-        <p class="card-text">
-            Kamal Norizan
-            <button wire:click="$emit('deleteComment',506)" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-            <br>
-            <small><i>29-07-2021</i></small>
-        </p>
-        <p class="card-text">From livewire</p>
-    </div>
-</div>
+
