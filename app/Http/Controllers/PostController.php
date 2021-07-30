@@ -40,10 +40,12 @@ class PostController extends Controller
         $post -> title = $request->title;
         $post -> description = $request->description;
         $post -> user_id = Auth::user()->id;
+        $post -> team_id = Auth::user()->currentTeam->id;
         $post->save();
 
         $response['title'] = $request->title;
         $response['user']  = $post->user->name;
+        $response['status']  = 'success';
 
         return response()->json($response);
     }
@@ -57,6 +59,10 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
+        $response['post']=$post;
+        $response['comments']=$post->comments;
+
+        return response()->json($response, 200);
     }
 
     /**
@@ -91,5 +97,12 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    public function apiShow()
+    {
+        $posts = Post::select('id','title','description')->where('user_id',Auth::user()->id)->get();
+
+        return response()->json($posts);
     }
 }
