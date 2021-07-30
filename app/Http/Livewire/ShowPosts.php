@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Post;
+use App\Models\Team;
 use Auth;
 class ShowPosts extends Component
 {
@@ -11,14 +12,17 @@ class ShowPosts extends Component
     public $limit=10;
     public $currpage=1;
     public $isDialogOpen=0;
+    public $team;
     public function render()
     {
         if($this->search !=''){
-            $this->posts = Post::with('user')->where('title','like','%'.$this->search.'%')->get();
+            $this->posts = Post::with('user')->where('team_id',Auth::user()->currentTeam->id)->where('title','like','%'.$this->search.'%')->get();
         }else{
             $offset = $this->limit * ($this->currpage-1);
-            $this->posts = Post::with('user')->latest()->offset($offset)->limit($this->limit)->get();
+            $this->posts = Post::with('user')->where('team_id',Auth::user()->currentTeam->id)->latest()->offset($offset)->limit($this->limit)->get();
         }
+
+        $this->team = Team::find(1);
 
         $this->totalrow = Post::count();
         $this->pages = ceil($this->totalrow / $this->limit);
@@ -64,6 +68,7 @@ class ShowPosts extends Component
             'title'=>$this->title,
             'description'=>$this->description,
             'user_id'=> Auth::user()->id,
+            'team_id'=> Auth::user()->currentTeam->id,
         ]);
 
         $this->clearForm();

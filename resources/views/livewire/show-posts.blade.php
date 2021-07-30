@@ -31,9 +31,11 @@
             <div class="card">
                 <div class="card-body">
                     <h1>Posts List</h1>
-                    <button type="button" class="float-right mb-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModel">
-                        Create Post
-                    </button>
+                    @if(Auth::user()->hasTeamPermission($team,'create'))
+                        <button type="button" class="float-right mb-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModel">
+                            Create Post
+                        </button>
+                    @endif
                     <div class="form-group col-md-3">
                       <label for="">Show :</label>
                       <select class="form-control" wire:model='limit' name="show" id="show">
@@ -76,11 +78,15 @@
                                     {{ $post->user->name }}
                                 </td>
                                 <td class="px-4 py-4">
-                                    <button type="button" wire:click="edit({{ $post->id }})"  data-toggle="modal" data-target="#detailModel" class="btn btn-warning btn-sm">Edit</button>
-
+                                    @if (Auth::user()->hasTeamPermission(Auth::user()->currentTeam,'update'))
+                                        <button type="button" wire:click="edit({{ $post->id }})"  data-toggle="modal" data-target="#detailModel" class="btn btn-warning btn-sm">Edit</button>
+                                    @endif
+                                    @if (Auth::user()->hasTeamPermission(Auth::user()->currentTeam,'read'))
                                     <a class="btn btn-info btn-sm" href='{{ route('post-detail',['id'=>$post->id]) }}'>Show</a>
-
+                                    @endif
+                                     @if (Auth::user()->hasTeamPermission(Auth::user()->currentTeam,'delete'))
                                     <button type="button" wire:click="$emit('deletePost',{{ $post->id }})"  class="btn btn-danger btn-sm">Delete</button>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

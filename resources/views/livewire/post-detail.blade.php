@@ -5,12 +5,16 @@
                 <div class="card-body">
                     <h4 class="card-title">
                         {{ $post->title }} <small>~{{ $post->user->name }}</small>
+                        @if(Auth::user()->hasTeamPermission(Auth::user()->currentTeam,'update'))
                         <button type="button" class="float-right mb-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModel" wire:click='loadModal()'>
                         <i class='fa fa-edit'></i>
                         </button>
+                        @endif
+                        @if(Auth::user()->hasTeamPermission(Auth::user()->currentTeam,'delete'))
                         <button type="button" class="float-right mb-2 mr-1 btn btn-danger btn-sm"   wire:click="$emit('deletePost',{{ $post->id }})">
                         <i class='fa fa-remove'></i>
                         </button>
+                        @endif
                     </h4>
                     <p class="card-text">{{ $post->description }}</p>
                 </div>

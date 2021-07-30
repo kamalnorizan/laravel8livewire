@@ -18,7 +18,7 @@ class Post extends Model
     public $incrementing = true;
 
     // protected $guarded = ['id'];
-    protected $fillable = ['title', 'description', 'user_id'];
+    protected $fillable = ['title', 'description', 'user_id', 'team_id'];
 
     /**
      * Get the user that owns the Post
