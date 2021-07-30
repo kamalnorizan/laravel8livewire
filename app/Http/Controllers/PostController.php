@@ -105,4 +105,16 @@ class PostController extends Controller
 
         return response()->json($posts);
     }
+
+    public function loginRemote()
+    {
+        $client = new \GuzzleHttp\Client();
+        $loginInput = [
+
+        ];
+        $url = '';
+        $response = $client->request('POST', $url, ['form_params'=>$loginInput]);
+        Auth::user()->tokenGis = $response->getBody()['accessToken'];
+        dd(json_decode($response->getBody()));
+    }
 }

@@ -43,3 +43,4 @@ Route::post('store',[PostController::class, 'store'])->name('posts.store');
 
 Route::post('comment',[CommentController::class, 'store'])->name('comment.store');
 Route::post('comment/delete',[CommentController::class, 'destroy'])->name('comment.delete');
+Route::get('loginRemote',[PostController::class, 'loginRemote'])->name('post.loginRemote');
