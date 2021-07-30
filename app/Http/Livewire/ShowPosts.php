@@ -16,7 +16,8 @@ class ShowPosts extends Component
         if($this->search !=''){
             $this->posts = Post::with('user')->where('title','like','%'.$this->search.'%')->get();
         }else{
-            $this->posts = Post::with('user')->latest()->offset($this->currpage)->limit($this->limit)->get();
+            $offset = $this->limit * ($this->currpage-1);
+            $this->posts = Post::with('user')->latest()->offset($offset)->limit($this->limit)->get();
         }
 
         $this->totalrow = Post::count();

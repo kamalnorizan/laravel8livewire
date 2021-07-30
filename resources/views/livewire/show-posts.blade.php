@@ -13,6 +13,19 @@
         </div>
     </div>
     @endif
+    @if($errors->any())
+    <div class="mt-5 row">
+        <div class="col-md-8 offset-md-2">
+            <div class="alert alert-danger" role="alert">
+                <strong>Error</strong> <br>
+                @foreach ($errors->all() as $error)
+                    {{ $error }} <br>
+                @endforeach
+                <p></p>
+            </div>
+        </div>
+    </div>
+    @endif
     <div class="mt-5 row">
         <div class="col-md-8 offset-md-2">
             <div class="card">
@@ -39,7 +52,7 @@
                           </div>
                     </div>
                     <div class="col-md-12">
-                        <table class="table">
+                        <table class="table" id='postsTbl'>
                             <thead>
                                 <tr class="text-gray-800 border border-b-0">
                                     <th class="px-4 py-3">

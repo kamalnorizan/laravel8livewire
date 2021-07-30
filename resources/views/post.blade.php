@@ -5,5 +5,7 @@
         </h2>
     </x-slot>
     @livewire('post-detail', ['post_id'=>$id])
-    {{-- <livewire:post-detail :post_id="$id"> --}}
+
+    @livewire('comment', ['post_id'=>$id])
+
 </x-app-layout>
