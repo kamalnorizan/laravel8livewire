@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
-
+use Auth;
 class CommentController extends Controller
 {
     /**
@@ -35,7 +35,8 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userCreateComment = Auth::user()->comments()->create($request->all());
+        return response()->json($userCreateComment);
     }
 
     /**
@@ -78,8 +79,16 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Request $request)
     {
-        //
+        try {
+            Comment::find($request->commentId)->delete();
+            $response['status'] = 'success';
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response['status']='failed';
+        }
+
+        return response()->json($response);
     }
 }
